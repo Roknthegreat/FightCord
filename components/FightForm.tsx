@@ -97,12 +97,12 @@ function renderForm(form: any, onSubmit: (values: z.infer<typeof formSchema>) =>
             <FormItem>
               <FormLabel>Height (feet & inches)</FormLabel>
               <FormControl>
-                <Input placeholder="5'10" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+              <Input placeholder="5&apos;10" {...field} />
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
         <FormField
           control={form.control}
           name="weight"
