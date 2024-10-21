@@ -76,7 +76,7 @@ export default function FightForm() {
         {renderForm(userForm, onSubmitUser, "user")}
       </TabsContent>
       <TabsContent value="opponent" className="glass p-6 rounded-lg">
-        <h2 className="text-2xl font-bold mb-4 text-primary">Enter Opponent's Details</h2>
+        <h2 className="text-2xl font-bold mb-4 text-primary">Enter Opponent&apos;s Details</h2>
         {renderForm(opponentForm, onSubmitOpponent, "opponent")}
       </TabsContent>
       {userInfo && opponentInfo && (
@@ -97,12 +97,12 @@ function renderForm(form: any, onSubmit: (values: z.infer<typeof formSchema>) =>
             <FormItem>
               <FormLabel>Height (feet & inches)</FormLabel>
               <FormControl>
-              <Input placeholder="5&apos;10" {...field} />
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
+                <Input placeholder="5&apos;10" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="weight"
