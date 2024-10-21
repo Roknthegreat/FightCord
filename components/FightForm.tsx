@@ -216,54 +216,54 @@ function renderForm(form: any, onSubmit: (values: z.infer<typeof formSchema>) =>
             </FormItem>
           )}
         />
+       <FormField
+  control={form.control}
+  name="fightingDisciplines"
+  render={() => (
+    <FormItem>
+      <div className="mb-4">
+        <FormLabel className="text-base">Fighting Disciplines</FormLabel>
+        <FormDescription>
+          Select the fighting disciplines you know
+        </FormDescription>
+      </div>
+      {["Boxing", "Wrestling", "MMA"].map((item) => (
         <FormField
+          key={item}
           control={form.control}
           name="fightingDisciplines"
-          render={() => (
-            <FormItem>
-              <div className="mb-4">
-                <FormLabel className="text-base">Fighting Disciplines</FormLabel>
-                <FormDescription>
-                  Select the fighting disciplines you know
-                </FormDescription>
-              </div>
-              {["Boxing", "Wrestling", "MMA"].map((item) => (
-                <FormField
-                  key={item}
-                  control={form.control}
-                  name="fightingDisciplines"
-                  render={({ field }) => {
-                    return (
-                      <FormItem
-                        key={item}
-                        className="flex flex-row items-start space-x-3 space-y-0"
-                      >
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value?.includes(item)}
-                            onCheckedChange={(checked) => {
-                              return checked
-                                ? field.onChange([...(field.value || []), item])
-                                : field.onChange(
-                                    field.value?.filter(
-                                      (value) => value !== item
-                                    )
-                                  )
-                            }}
-                          />
-                        </FormControl>
-                        <FormLabel className="font-normal">
-                          {item}
-                        </FormLabel>
-                      </FormItem>
-                    )
-                  }}
-                />
-              ))}
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            return (
+              <FormItem
+                key={item}
+                className="flex flex-row items-start space-x-3 space-y-0"
+              >
+                <FormControl>
+                  <Checkbox
+                    checked={field.value?.includes(item)}
+                    onCheckedChange={(checked) => {
+                      return checked
+                        ? field.onChange([...(field.value || []), item])
+                        : field.onChange(
+                            field.value?.filter(
+                              (value: string) => value !== item // Explicitly typed 'value' as string here
+                            )
+                          )
+                    }}
+                  />
+                </FormControl>
+                <FormLabel className="font-normal">
+                  {item}
+                </FormLabel>
+              </FormItem>
+            );
+          }}
         />
+      ))}
+      <FormMessage />
+    </FormItem>
+  )}
+/>
         <Button type="submit" className="w-full bg-primary hover:bg-primary/80 text-white">
           {formType === "user" ? "Next" : "Submit and Analyze"}
         </Button>
