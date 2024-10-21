@@ -12,8 +12,12 @@ export default function DynamicBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    
+    resizeCanvas();  // Set canvas size when the component mounts.
 
     const particles: Particle[] = [];
 
@@ -27,8 +31,8 @@ export default function DynamicBackground() {
       opacity: number;
 
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * (canvas?.width || 0);
+        this.y = Math.random() * (canvas?.height || 0);
         this.size = Math.random() * 30 + 15;
         this.speedX = Math.random() * 2 - 1;
         this.speedY = Math.random() * 2 - 1;
@@ -40,11 +44,11 @@ export default function DynamicBackground() {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        if (this.x > canvas.width) this.x = 0;
-        else if (this.x < 0) this.x = canvas.width;
+        if (this.x > (canvas?.width || 0)) this.x = 0;
+        else if (this.x < 0) this.x = canvas?.width || 0;
 
-        if (this.y > canvas.height) this.y = 0;
-        else if (this.y < 0) this.y = canvas.height;
+        if (this.y > (canvas?.height || 0)) this.y = 0;
+        else if (this.y < 0) this.y = canvas?.height || 0;
 
         this.opacity += Math.random() * 0.02 - 0.01;
         if (this.opacity < 0.1) this.opacity = 0.1;
@@ -70,11 +74,14 @@ export default function DynamicBackground() {
     }
 
     function animate() {
+      if (!ctx || !canvas) return;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-      }
+      particles.forEach((particle) => {
+        particle.update();
+        particle.draw();
+      });
+
       requestAnimationFrame(animate);
     }
 
@@ -82,8 +89,8 @@ export default function DynamicBackground() {
     animate();
 
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      resizeCanvas();
+      ctx?.clearRect(0, 0, canvas.width, canvas.height);
     };
 
     window.addEventListener('resize', handleResize);
